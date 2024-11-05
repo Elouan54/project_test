@@ -48,7 +48,7 @@ void main() {
   /* test('Ajout d\'un personnage dans le plateau', () {
     ajoutDansPlateau(joueursList[0]);
     ajoutDansPlateau(ennemisList[0]);
-    ajoutDansPlateau(bossList[0]);
+    ajoutDansPlateau(bossList[0]); 
   }); */
 
   test('Le joueur rentre dans une salle attaque', () {
