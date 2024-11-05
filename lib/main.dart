@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_test/screens/principalMaster.dart';
+import 'package:project_test/screens/principal_master.dart';
 
 void main() {
   runApp(const MyApp());
