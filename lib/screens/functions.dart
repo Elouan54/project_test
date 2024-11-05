@@ -2,10 +2,12 @@ import 'package:project_test/providers/boss.dart';
 import 'package:project_test/providers/ennemis.dart';
 import 'package:project_test/providers/joueurs.dart';
 
-List<dynamic> plateau = [];
-
-void ajoutDansPlateau(dynamic personnage) {
+void ajoutDansPlateau(dynamic personnage, dynamic plateau) {
   plateau.add(personnage);
+}
+
+void suppressionDansPlateau(dynamic personnage, dynamic plateau) {
+  plateau.remove(personnage);
 }
 
 void augmenterAttaque(Joueurs joueur, int valeur) {

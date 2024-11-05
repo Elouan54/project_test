@@ -45,11 +45,28 @@ void main() {
     ];
   });
 
-  /* test('Ajout d\'un personnage dans le plateau', () {
-    ajoutDansPlateau(joueursList[0]);
-    ajoutDansPlateau(ennemisList[0]);
-    ajoutDansPlateau(bossList[0]); 
-  }); */
+  test('Ajout d\'un personnage dans le plateau', () {
+    //Context
+    List<dynamic> plateau = [];
+    //Acte
+    ajoutDansPlateau(joueursList[0], plateau);
+    ajoutDansPlateau(ennemisList[0], plateau);
+    ajoutDansPlateau(bossList[0], plateau);
+    //Assertion
+    expect(plateau, contains(joueursList[0]));
+    expect(plateau, contains(ennemisList[0]));
+    expect(plateau, contains(bossList[0]));
+  });
+
+  test('Suppression d\'un personnage dans le plateau', () {
+    //Context
+    List<dynamic> plateau = [];
+    ajoutDansPlateau(joueursList[0], plateau);
+    //Acte
+    suppressionDansPlateau(joueursList[0], plateau);
+    //Assertion
+    expect(plateau, isNot(contains(joueursList[0])));
+  });
 
   test('Le joueur rentre dans une salle attaque', () {
     //Acte
