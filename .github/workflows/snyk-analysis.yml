@@ -1,0 +1,42 @@
+name: Snyk Dependency Analysis
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  snyk:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Cloner le dépôt
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Installer Node.js (si nécessaire pour cdxgen et snyk)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Étape 3 : Installer Snyk CLI
+      - name: Install Snyk
+        run: npm install -g snyk
+
+      # Étape 4 : Authentifier avec Snyk
+      - name: Authenticate Snyk
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk auth $SNYK_TOKEN
+
+      # Étape 5 : Créer un fichier SBOM pour les dépendances Flutter
+      - name: Generate SBOM
+        run: |
+          npm install -g @cyclonedx/cdxgen
+          cdxgen -t pub -o pub-sbom.json
+
+      # Étape 6 : Analyser les dépendances avec Snyk
+      - name: Run Snyk scan
+        run: snyk sbom test --experimental --file pub-sbom.json
