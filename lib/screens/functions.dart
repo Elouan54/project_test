@@ -44,3 +44,7 @@ void rencontreBoss(Joueurs joueur, Boss boss) {
     }
   }
 }
+
+bool partieTerminee(Joueurs joueur) {
+  return joueur.pointsDeVie <= 0;
+}

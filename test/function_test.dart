@@ -117,4 +117,11 @@ void main() {
     expect(joueursList[2].pointsDeVie, lessThanOrEqualTo(0));
     expect(bossList[2].pointsDeVie, equals(10));
   });
+
+  test('Fin de partie lorsque le joueur atteint zéro PV', () {
+    joueursList[2].pointsDeVie = 1;
+    rencontreEnnemi(joueursList[2], ennemisList[2]);
+    expect(joueursList[2].pointsDeVie, lessThanOrEqualTo(0));
+    expect(partieTerminee(joueursList[2]), isTrue);
+  });
 }
