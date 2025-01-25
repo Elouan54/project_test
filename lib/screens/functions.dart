@@ -12,6 +12,9 @@ void suppressionDansPlateau(dynamic personnage, dynamic plateau) {
 
 void augmenterAttaque(Joueurs joueur, int valeur) {
   joueur.attaque += valeur;
+  if (joueur.attaque > 20) {
+    joueur.attaque = 20;
+  }
 }
 
 void augmenterPV(Joueurs joueur) {

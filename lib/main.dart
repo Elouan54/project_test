@@ -1,81 +1,77 @@
 import 'package:flutter/material.dart';
+import 'package:project_test/providers/joueurs.dart';
 import 'package:project_test/screens/jeu.dart';
 
 void main() {
-  runApp(const Main());
+  runApp(MyApp());
 }
 
-class Main extends StatelessWidget {
-  const Main({super.key});
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Jeu',
+      title: 'Jeu de Salle',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-      home: const AccueilScreen(),
+      home: MainPage(),
     );
   }
 }
 
-class AccueilScreen extends StatelessWidget {
-  const AccueilScreen({super.key});
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  List<String> messages = [];
+  int salle = 1; // Compteur de salle
+  Joueurs joueur =
+      Joueurs(idJoueur: 1, nomJoueur: 'Joueur', pointsDeVie: 100, attaque: 10);
+
+  void ajouterMessage(String message) {
+    setState(() {
+      messages.insert(0, message); // Ajoute le message en haut de la liste
+    });
+  }
+
+  void avancerDansLeJeu() {
+    jeu(ajouterMessage, joueur, salle); // Avance d'une salle dans le jeu
+    setState(() {
+      salle++; // Augmente la salle à chaque clic
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Accueil du Jeu'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const JeuScreen()),
-            );
-          },
-          child: const Text('Lancer le jeu'),
-        ),
-      ),
-    );
-  }
-}
-
-class JeuScreen extends StatefulWidget {
-  const JeuScreen({super.key});
-
-  @override
-  _JeuScreenState createState() => _JeuScreenState();
-}
-
-class _JeuScreenState extends State<JeuScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Jeu'),
+        title: Text('Jeu de Salle'),
       ),
       body: Column(
         children: [
-          /* Expanded(
+          Expanded(
             child: ListView.builder(
+              reverse: true, // Affiche les messages dans l'ordre inverse
               itemCount: messages.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(messages[index]),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    messages[index],
+                    style: TextStyle(fontSize: 16),
+                  ),
                 );
               },
             ),
-          ), */
-          ElevatedButton(
-            onPressed: () {
-              jeu();
-            },
-            child: const Text('Suivant'),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: avancerDansLeJeu,
+              child: Text('Passer à la salle suivante'),
+            ),
           ),
         ],
       ),
